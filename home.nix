@@ -19,6 +19,12 @@
             {
               package = gnomeExtensions.blur-my-shell;
             }
+            {
+              package = gnomeExtensions.caffeine;
+            }
+            # {
+            #   package = gnomeExtensions.gsconnect;
+            # }
           ];
         };
 
