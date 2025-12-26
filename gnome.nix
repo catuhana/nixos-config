@@ -12,7 +12,7 @@
 
     flatpak.enable = true;
   };
-  
+
   environment.gnome.excludePackages = with pkgs; [
     epiphany
     gnome-contacts
@@ -23,7 +23,7 @@
     gnome-connections
     geary
   ];
-  
+
   programs.dconf.profiles.user.databases = [
     {
       settings = {
