@@ -8,8 +8,6 @@
     sudo.enable = false;
     sudo-rs.enable = true;
 
-    # confinement.enable = true;
-
     tpm2 = {
       enable = true;
       abrmd.enable = true;
