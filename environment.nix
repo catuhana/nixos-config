@@ -7,8 +7,8 @@
     ];
 
     variables = {
-      EDITOR = "msedit";
-      VISUAL = "msedit";
+      EDITOR = "edit";
+      VISUAL = "edit";
     };
 
     shellAliases = {
