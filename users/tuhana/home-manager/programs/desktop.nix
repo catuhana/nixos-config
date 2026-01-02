@@ -13,6 +13,9 @@
       {
         package = gnomeExtensions.appindicator;
       }
+      {
+        package = gnomeExtensions.gsconnect;
+      }
     ];
   };
 }
