@@ -4,7 +4,6 @@
     ./boot.nix
     ./disks.nix
     ./hardware.nix
-    ./networking.nix
 
     ../../modules/core/boot.nix
     ../../modules/core/environment.nix
