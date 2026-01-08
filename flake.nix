@@ -33,7 +33,7 @@
                   map (
                     system:
                     let
-                      attrName = builtins.length systems > 1 ? "${hostName}.${system}" // hostName;
+                      attrName = if builtins.length systems > 1 then "${hostName}.${system}" else hostName;
                     in
                     {
                       name = attrName;
@@ -57,7 +57,7 @@
                   ) systems
                 );
             in
-            mkSystem "MateBookD14" [ "x86_64-linux" ] [ ];
+            mkSystem "MateBookD14" [ "x86_64-linux" ];
         };
 
         perSystem =
