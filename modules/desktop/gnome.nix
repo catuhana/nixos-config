@@ -14,13 +14,18 @@
 
   environment.gnome.excludePackages = with pkgs; [
     epiphany
+    geary
+    gnome-connections
+    gnome-console
     gnome-contacts
     gnome-maps
     gnome-music
-    simple-scan
     gnome-tour
-    gnome-connections
-    geary
+    simple-scan
+  ];
+
+  environment.systemPackages = with pkgs; [
+    ptyxis
   ];
 
   programs.dconf.profiles.user.databases = [
