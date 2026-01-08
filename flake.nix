@@ -28,7 +28,7 @@
           nixosConfigurations =
             let
               mkSystem =
-                name: systems: extraModules:
+                name: systems:
                 let
                   isMultiSystem = builtins.length systems > 1;
                 in
@@ -48,8 +48,7 @@
                             networking.hostName = name;
                           }
                         )
-                      ]
-                      ++ extraModules;
+                      ];
                     };
                   }) systems
                 );
