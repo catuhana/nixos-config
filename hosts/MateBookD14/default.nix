@@ -17,8 +17,9 @@
     ../../modules/desktop/fonts.nix
     ../../modules/desktop/gnome.nix
 
-    ../../modules/programs.nix
-    ../../modules/services.nix
+    ../../modules/programs/nix-ld.nix
+
+    ../../modules/services/userborn.nix
 
     # TODO: Refactor to use a single users file?
     ../../users/tuhana/users.nix

@@ -1,0 +1,6 @@
+{ ... }:
+{
+  services.userborn = {
+    enable = true;
+  };
+}

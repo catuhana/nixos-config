@@ -1,9 +1,9 @@
 {
-  description = "Tuhana's NixOS Configuration";
+  description = "Tuhana's Nix Configuration(s)";
 
   inputs = {
-    flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -61,7 +61,7 @@
         };
 
         perSystem =
-          { pkgs, system, ... }:
+          { pkgs, ... }:
           {
             formatter = pkgs.nixfmt-tree;
           };
