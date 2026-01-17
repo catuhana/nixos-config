@@ -13,7 +13,7 @@
 
       locale.timeZone = "Europe/Istanbul";
 
-      networking.resolved.enable = true;
+      # networking.resolved.enable = true;
 
       nix.gc.enable = true;
 

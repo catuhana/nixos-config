@@ -32,7 +32,9 @@ let
 in
 {
   options.tuhana.core.networking = {
-    resolved.enable = mkEnableOption "Use systemd-resolved for DNS";
+    resolved.enable = mkEnableOption "Use systemd-resolved for DNS" // {
+      default = true;
+    };
   };
 
   config = mkMerge [
