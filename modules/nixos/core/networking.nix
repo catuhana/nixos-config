@@ -44,11 +44,12 @@ in
       services.resolved = {
         enable = true;
 
-        dnssec = "true";
-        dnsovertls = "true";
-
-        domains = [ "~." ];
-        fallbackDns = selectedDnsProvider.dot;
+        settings.Resolve = {
+          DNSOverTLS = true;
+          DNSSEC = true;
+          Domains = [ "~." ];
+          FallbackDNS = selectedDnsProvider.dot;
+        };
       };
     })
   ];
