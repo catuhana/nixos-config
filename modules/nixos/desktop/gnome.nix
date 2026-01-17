@@ -6,6 +6,7 @@
 }:
 let
   inherit (lib)
+    mkIf
     mkOption
     mkEnableOption
     types
@@ -18,7 +19,7 @@ in
     enable = mkEnableOption "GNOME desktop environment";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     fonts.enableDefaultPackages = true;
 
     services = {

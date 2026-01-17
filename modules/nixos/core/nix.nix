@@ -6,6 +6,7 @@
 }:
 let
   inherit (lib)
+    mkIf
     mkEnableOption
     ;
 
@@ -29,7 +30,7 @@ in
         auto-optimise-store = true;
       };
 
-      gc = lib.mkIf cfg.gc.enable {
+      gc = mkIf cfg.gc.enable {
         automatic = true;
         dates = "daily";
         options = "--delete-older-than 7d";

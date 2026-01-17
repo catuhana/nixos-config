@@ -1,6 +1,7 @@
 { config, lib, ... }:
 let
   inherit (lib)
+    mkIf
     mkEnableOption
     ;
 
@@ -11,7 +12,7 @@ in
     enable = mkEnableOption "Enable nix-ld";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.nix-ld.enable = true;
   };
 }

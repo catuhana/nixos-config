@@ -1,6 +1,7 @@
 { config, lib, ... }:
 let
   inherit (lib)
+    mkIf
     mkEnableOption
     ;
 
@@ -11,7 +12,7 @@ in
     enable = mkEnableOption "Enable Userborn";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     services.userborn.enable = true;
   };
 }

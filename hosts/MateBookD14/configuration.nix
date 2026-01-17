@@ -13,14 +13,12 @@
 
       locale.timeZone = "Europe/Istanbul";
 
-      # networking.resolved.enable = true;
-
-      nix.gc.enable = true;
-
       security = {
         apparmor.enable = true;
         tpm2.enable = true;
       };
+
+      nix.gc.enable = true;
     };
 
     desktop.gnome.enable = true;
