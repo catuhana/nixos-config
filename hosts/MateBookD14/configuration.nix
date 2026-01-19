@@ -13,6 +13,10 @@
 
       locale.timeZone = "Europe/Istanbul";
 
+      networking.resolved = {
+        mDNS = true;
+      };
+
       security = {
         apparmor.enable = true;
         tpm2.enable = true;

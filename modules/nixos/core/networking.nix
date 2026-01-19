@@ -13,7 +13,7 @@ let
     types
     ;
 
-  cfg = config.tuhana.core.networking;
+  cfg = config.tuhana.core.networking.resolved;
 
   DNS = {
     ips = [
@@ -31,10 +31,12 @@ let
   };
 in
 {
-  options.tuhana.core.networking = {
-    resolved.enable = mkEnableOption "Use systemd-resolved for DNS" // {
-      default = true;
-    };
+  options.tuhana.core.networking.resolved = {
+      enable = mkEnableOption "Use systemd-resolved for DNS" // {
+        default = true;
+      };
+
+      mDNS = mkEnableOption "Enable Multicast DNS";
   };
 
   config = mkMerge [
@@ -44,7 +46,7 @@ in
         timeServers = [ "time.cloudflare.com" ];
       };
     }
-    (mkIf cfg.resolved.enable {
+    (mkIf cfg.enable {
       services.resolved = {
         enable = true;
 
@@ -53,6 +55,8 @@ in
 
           DNSOverTLS = true;
           DNSSEC = true;
+          MulticastDNS = cfg.mDNS;
+          LLMNR = false;
 
           FallbackDNS = DNS.dot;
         };
