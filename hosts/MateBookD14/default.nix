@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ ... }:
 {
   imports = [
     ./configuration.nix
@@ -8,7 +8,5 @@
 
     # TODO: Refactor to use a single users file?
     ../../users/tuhana/users.nix
-
-    inputs.disko.nixosModules.default
   ];
 }

@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }:
 let
@@ -15,18 +14,9 @@ let
     types
     ;
 
-  inherit (inputs)
-    lanzaboote
-    ;
-
   cfg = config.tuhana.core.boot;
 in
 {
-  # TODO: Nix is lazily evaluated, so import every module
-  # at `flake.nix` even when not used by a specific
-  # system.
-  imports = [ lanzaboote.nixosModules.lanzaboote ];
-
   options.tuhana.core.boot = {
     kernel = mkOption {
       type = types.raw;

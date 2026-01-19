@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  inputs,
   ...
 }:
 let
@@ -23,8 +22,6 @@ in
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
-
-      extraSpecialArgs = { inherit inputs; };
 
       backupFileExtension = "bak";
     };
