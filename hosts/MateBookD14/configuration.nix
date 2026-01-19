@@ -7,6 +7,7 @@
   tuhana = {
     core = {
       boot = {
+        secureBoot.enable = true;
         silentBoot.enable = true;
         plymouth.enable = true;
       };

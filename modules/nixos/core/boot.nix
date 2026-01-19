@@ -2,26 +2,38 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
   inherit (lib)
     mkIf
+    mkForce
     mkMerge
     mkOption
     mkEnableOption
     types
     ;
 
+  inherit (inputs)
+    lanzaboote
+    ;
+
   cfg = config.tuhana.core.boot;
 in
 {
+  # TODO: Nix is lazily evaluated, so import every module
+  # at `flake.nix` even when not used by a specific
+  # system.
+  imports = [ lanzaboote.nixosModules.lanzaboote ];
+
   options.tuhana.core.boot = {
     kernel = mkOption {
       type = types.raw;
       default = pkgs.linuxPackages_latest;
     };
 
+    secureBoot.enable = mkEnableOption "Enable Secure Boot";
     silentBoot.enable = mkEnableOption "Enable silent boot";
     plymouth.enable = mkEnableOption "Enable Plymouth";
   };
@@ -53,6 +65,25 @@ in
         tmp.cleanOnBoot = true;
       };
     }
+
+    (mkIf cfg.secureBoot.enable {
+      environment.systemPackages = with pkgs; [
+        sbctl
+      ];
+
+      boot = {
+        loader.systemd-boot.enable = mkForce false;
+
+        lanzaboote = {
+          enable = true;
+
+          pkiBundle = "/var/lib/sbctl";
+
+          autoGenerateKeys.enable = true;
+          autoEnrollKeys.enable = true;
+        };
+      };
+    })
 
     (mkIf cfg.silentBoot.enable {
       boot = {
