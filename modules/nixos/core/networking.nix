@@ -32,11 +32,11 @@ let
 in
 {
   options.tuhana.core.networking.resolved = {
-      enable = mkEnableOption "Use systemd-resolved for DNS" // {
-        default = true;
-      };
+    enable = mkEnableOption "Use systemd-resolved for DNS" // {
+      default = true;
+    };
 
-      mDNS = mkEnableOption "Enable Multicast DNS";
+    mDNS = mkEnableOption "Enable Multicast DNS";
   };
 
   config = mkMerge [
