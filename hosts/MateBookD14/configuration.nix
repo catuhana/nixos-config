@@ -1,4 +1,4 @@
-{ ... }:
+{ hostName, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -32,8 +32,8 @@
     services.userborn.enable = true;
   };
 
-  networking.hostName = "MateBookD14";
-  
+  networking.hostName = hostName;
+
   # TODO: Maybe import this for every host?
   home-manager.users.tuhana = import ../../users/tuhana/home.nix;
 

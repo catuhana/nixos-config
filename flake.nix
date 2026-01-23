@@ -1,9 +1,9 @@
 {
-  description = "Tuhana's Nix Configuration(s)";
+  description = "Tuhana's Nix configuration flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,53 +19,67 @@
   };
 
   outputs =
-    { flake-parts, ... }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } (
-      { config, ... }:
-      {
-        systems = [
-          "x86_64-linux"
-          "aarch64-linux"
-        ];
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      disko,
+      lanzaboote,
+    }@inputs:
+    let
+      inherit (nixpkgs)
+        lib
+        ;
 
-        flake = {
-          nixosConfigurations =
-            let
-              mkSystem =
-                hostName: systems:
-                builtins.listToAttrs (
-                  map (
-                    system:
-                    let
-                      attrName = if builtins.length systems > 1 then "${hostName}.${system}" else hostName;
-                    in
-                    {
-                      name = attrName;
+      perSystem =
+        f:
+        let
+          allSystems = lib.systems.flakeExposed;
 
-                      value = inputs.nixpkgs.lib.nixosSystem {
-                        inherit system;
+          systemOutputs = lib.genAttrs allSystems (
+            system:
+            f {
+              inherit system inputs;
 
-                        modules = [
-                          inputs.home-manager.nixosModules.home-manager
-                          inputs.disko.nixosModules.default
-                          inputs.lanzaboote.nixosModules.lanzaboote
-                        ]
-                        ++ [
-                          ./hosts/${hostName}
-                        ];
-                      };
-                    }
-                  ) systems
-                );
-            in
-            mkSystem "MateBookD14" [ "x86_64-linux" ];
-        };
+              pkgs = import nixpkgs {
+                inherit system;
+              };
+            }
+          );
+          outputNames = lib.unique (
+            lib.concatLists (lib.mapAttrsToList (_: v: lib.attrNames v) systemOutputs)
+          );
+        in
+        lib.genAttrs outputNames (outputName: lib.genAttrs allSystems (system: systemOutputs.${system}.${outputName}));
+    in
+    {
+      nixosConfigurations =
+        let
+          mkSystem = hostName: system: {
+            ${hostName} = lib.nixosSystem {
+              inherit system;
 
-        perSystem =
-          { pkgs, ... }:
-          {
-            formatter = pkgs.nixfmt-tree;
+              specialArgs = {
+                inherit hostName;
+              };
+
+              modules = [
+                home-manager.nixosModules.home-manager
+                disko.nixosModules.default
+                lanzaboote.nixosModules.lanzaboote
+              ]
+              ++ [
+                ./hosts/${hostName}
+              ];
+            };
           };
+        in
+        mkSystem "MateBookD14" "x86_64-linux";
+    }
+    // perSystem (
+      { pkgs, ... }:
+      {
+        formatter = pkgs.nixfmt-tree;
       }
     );
 }
